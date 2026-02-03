@@ -485,53 +485,40 @@ export function WeightLossQuiz({ onComplete }: WeightLossQuizProps) {
             {/* Question Container */}
             <div className="flex-1 flex items-center justify-center px-4 py-20">
                 <div className="w-full max-w-2xl">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentStep}
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -50 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="space-y-8"
-                        >
-                            {/* Question Header */}
-                            <div className="space-y-3">
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <span>Question {currentStep + 1} of {totalSteps}</span>
-                                    <span>•</span>
-                                    <span className="capitalize">{currentQuestion.section.replace("_", " ")}</span>
-                                </div>
-                                <h2 className="text-3xl md:text-4xl font-serif font-medium text-foreground">
-                                    {currentQuestion.question}
-                                </h2>
-                                {currentQuestion.subtitle && (
-                                    <p className="text-muted-foreground">{currentQuestion.subtitle}</p>
-                                )}
-                                {currentQuestion.context && (
-                                    <p className="text-sm text-muted-foreground italic">{currentQuestion.context}</p>
-                                )}
+                    <div className="space-y-8">
+                        {/* Question Header */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Question {currentStep + 1} of {totalSteps}</span>
+                                <span>•</span>
+                                <span className="capitalize">{currentQuestion.section.replace("_", " ")}</span>
                             </div>
-
-                            {/* Question Input */}
-                            <QuestionInput
-                                question={currentQuestion}
-                                value={answers[currentQuestion.id]}
-                                onChange={updateAnswer}
-                            />
-
-                            {/* Error Message */}
-                            {error && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="flex items-center gap-2 text-sm text-red-600 bg-red-50 px-4 py-3 rounded-lg"
-                                >
-                                    <X className="w-4 h-4" />
-                                    {error}
-                                </motion.div>
+                            <h2 className="text-3xl md:text-4xl font-serif font-medium text-foreground">
+                                {currentQuestion.question}
+                            </h2>
+                            {currentQuestion.subtitle && (
+                                <p className="text-muted-foreground">{currentQuestion.subtitle}</p>
                             )}
-                        </motion.div>
-                    </AnimatePresence>
+                            {currentQuestion.context && (
+                                <p className="text-sm text-muted-foreground italic">{currentQuestion.context}</p>
+                            )}
+                        </div>
+
+                        {/* Question Input */}
+                        <QuestionInput
+                            question={currentQuestion}
+                            value={answers[currentQuestion.id]}
+                            onChange={updateAnswer}
+                        />
+
+                        {/* Error Message */}
+                        {error && (
+                            <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 px-4 py-3 rounded-lg">
+                                <X className="w-4 h-4" />
+                                {error}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
