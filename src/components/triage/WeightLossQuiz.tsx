@@ -483,7 +483,10 @@ export function WeightLossQuiz({ onComplete }: WeightLossQuizProps) {
             </div>
 
             {/* Question Container */}
-            <div className="flex-1 flex items-center justify-center px-4 py-20">
+            <div
+                className="flex-1 flex items-center justify-center px-4 py-20 transform-gpu"
+                style={{ transform: "translateZ(0)" }}
+            >
                 <div className="w-full max-w-2xl">
                     <div className="space-y-8">
                         {/* Question Header */}
