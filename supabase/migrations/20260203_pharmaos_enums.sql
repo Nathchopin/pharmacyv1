@@ -1,17 +1,34 @@
 -- Up Migration
 BEGIN;
 
--- Update consultation_status enum
-ALTER TYPE consultation_status ADD VALUE IF NOT EXISTS 'booked';
-ALTER TYPE consultation_status ADD VALUE IF NOT EXISTS 'inventory_check';
-ALTER TYPE consultation_status ADD VALUE IF NOT EXISTS 'active_subscription';
+-- 1. Try to drop existing check constraints if they exist (naming convention assumption)
+ALTER TABLE consultations DROP CONSTRAINT IF EXISTS consultations_status_check;
+ALTER TABLE consultations DROP CONSTRAINT IF EXISTS consultations_service_type_check;
 
--- Update service_type enum
-ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'weight_loss';
-ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'hair_loss';
-ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'blood_test';
-ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'travel_clinic';
-ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'pharmacy_first';
-ALTER TYPE service_type ADD VALUE IF NOT EXISTS 'shop';
+-- 2. Add new check constraints with expanded values
+ALTER TABLE consultations 
+ADD CONSTRAINT consultations_status_check 
+CHECK (status IN (
+    'pending_review', 
+    'in_progress', 
+    'approved', 
+    'rejected', 
+    'completed',
+    'booked', 
+    'inventory_check', 
+    'active_subscription'
+));
+
+ALTER TABLE consultations 
+ADD CONSTRAINT consultations_service_type_check 
+CHECK (service_type IN (
+    'general', 
+    'weight_loss', 
+    'hair_loss', 
+    'blood_test', 
+    'travel_clinic', 
+    'pharmacy_first', 
+    'shop'
+));
 
 COMMIT;

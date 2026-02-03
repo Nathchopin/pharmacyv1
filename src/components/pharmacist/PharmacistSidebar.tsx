@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { usePharmacistStats } from "@/hooks/use-pharmacist-stats";
 import {
     ClipboardList,
     Users,
@@ -17,15 +18,18 @@ import {
     X,
     Activity,
     Thermometer,
+    Scale,
+    Scissors,
+    Syringe,
     Plane,
     ShoppingBag,
-    Stethoscope,
-    Syringe
+    Stethoscope
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { usePharmacistStats } from "@/hooks/use-pharmacist-stats";
+import { Badge } from "@/components/ui/badge";
 
 interface PharmacistSidebarProps {
     collapsed: boolean;
@@ -34,17 +38,14 @@ interface PharmacistSidebarProps {
     onMobileOpenChange?: (open: boolean) => void;
 }
 
-export function PharmacistSidebar({
-    collapsed,
-    onToggle,
-    mobileOpen = false,
-    onMobileOpenChange,
-}: PharmacistSidebarProps) {
+export function PharmacistSidebar() {
     const navigate = useNavigate();
     const location = useLocation();
     const { toast } = useToast();
+    const [collapsed, setCollapsed] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const isMobile = useIsMobile();
-    const { stats } = usePharmacistStats();
+    const { stats: counts } = usePharmacistStats();
 
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
@@ -100,7 +101,7 @@ export function PharmacistSidebar({
                     name: "Blood Tests",
                     href: "/pharmacist/appointments",
                     icon: Syringe,
-                    count: stats.blood_test,
+                    count: counts.blood_test,
                     color: "text-rose-500",
                     badgeColor: "bg-rose-100 text-rose-700"
                 },
