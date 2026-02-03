@@ -693,14 +693,26 @@ function CheckboxList({ question, value, onChange }: any) {
     const noneValue = noneOption?.value || "none";
 
     const toggleItem = (itemValue: string) => {
+        let newSelected = [...selected];
+
         if (itemValue === noneValue) {
-            onChange(selected.includes(noneValue) ? [] : [noneValue]);
+            // Exclusive: Clears everything else
+            newSelected = selected.includes(noneValue) ? [] : [noneValue];
         } else {
-            const newSelected = selected.includes(itemValue)
-                ? selected.filter((v: string) => v !== itemValue)
-                : [...selected.filter((v: string) => v !== noneValue), itemValue];
-            onChange(newSelected);
+            // Standard Item
+            // 1. Remove "none" if present
+            if (newSelected.includes(noneValue)) {
+                newSelected = newSelected.filter(v => v !== noneValue);
+            }
+
+            // 2. Toggle item
+            if (newSelected.includes(itemValue)) {
+                newSelected = newSelected.filter(v => v !== itemValue);
+            } else {
+                newSelected.push(itemValue);
+            }
         }
+        onChange(newSelected);
     };
 
     return (
