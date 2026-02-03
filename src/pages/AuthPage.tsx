@@ -60,7 +60,7 @@ export default function AuthPage({
         const { data: profile } = await supabase
           .from('profiles')
           .select('role')
-          .eq('id', session.user.id)
+          .eq('user_id', session.user.id)
           .single();
 
         const userRole = profile?.role || 'patient';
@@ -202,7 +202,7 @@ export default function AuthPage({
         const { data: profile } = await supabase
           .from('profiles')
           .select('role')
-          .eq('id', data.user.id)
+          .eq('user_id', data.user.id)
           .single();
 
         const userRole = profile?.role || 'patient';
