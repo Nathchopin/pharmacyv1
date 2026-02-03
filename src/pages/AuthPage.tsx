@@ -452,6 +452,33 @@ export default function AuthPage({
                 )}
               </>
             )}
+
+            {/* Cross-Portal Navigation Link */}
+            <div className="mt-8 pt-6 border-t border-border flex justify-center">
+              {allowedRoles.includes("patient") ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate("/pharmacist/login");
+                  }}
+                  className="text-sm text-muted-foreground hover:text-eucalyptus transition-colors flex items-center gap-2"
+                >
+                  <Shield className="w-4 h-4" />
+                  <span>Pharmacist / Clinical Access</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate("/auth");
+                  }}
+                  className="text-sm text-muted-foreground hover:text-eucalyptus transition-colors flex items-center gap-2"
+                >
+                  <span className="w-4 h-4 flex items-center justify-center font-serif text-xs">P+</span>
+                  <span>Return to Patient Portal</span>
+                </button>
+              )}
+            </div>
           </motion.div>
         </div>
       </motion.div>
