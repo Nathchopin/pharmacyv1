@@ -3,8 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { StaggerContainer, StaggerItem, HoverTilt, Counter } from "@/components/animations/SlickMotion";
-import { Clock, AlertCircle, CheckCircle2, User, Calendar } from "lucide-react";
+import { StaggerContainer, StaggerItem, Counter } from "@/components/animations/SlickMotion";
+import { Clock, AlertCircle, CheckCircle2, User, Calendar, ArrowRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 interface Consultation {
@@ -47,93 +47,94 @@ export default function PharmacistDashboardPage() {
 
     const getPriorityColor = (serviceType: string) => {
         switch (serviceType) {
-            case 'weight_loss': return 'bg-amber-500/20 text-amber-200 border-amber-500/30';
-            case 'travel_clinic': return 'bg-purple-500/20 text-purple-200 border-purple-500/30';
-            case 'pharmacy_first': return 'bg-blue-500/20 text-blue-200 border-blue-500/30';
-            default: return 'bg-emerald-500/20 text-emerald-200 border-emerald-500/30';
+            case 'weight_loss': return 'bg-amber-100 text-amber-800 border-amber-200';
+            case 'travel_clinic': return 'bg-purple-100 text-purple-800 border-purple-200';
+            case 'pharmacy_first': return 'bg-blue-100 text-blue-800 border-blue-200';
+            default: return 'bg-emerald-100 text-emerald-800 border-emerald-200';
         }
     };
 
     const ConsultationCard = ({ consultation }: { consultation: Consultation }) => (
-        <HoverTilt intensity={5}>
-            <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg hover:shadow-xl transition-all">
-                <CardHeader className="pb-3 border-b border-white/10">
-                    <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1">
-                            <CardTitle className="text-white font-['Playfair_Display'] text-lg">
-                                {consultation.service_type.split('_').map(w =>
-                                    w.charAt(0).toUpperCase() + w.slice(1)
-                                ).join(' ')}
-                            </CardTitle>
-                            <CardDescription className="text-emerald-200/60 flex items-center gap-1 mt-1">
-                                <Calendar className="w-3 h-3" />
-                                {formatDistanceToNow(new Date(consultation.created_at), { addSuffix: true })}
-                            </CardDescription>
-                        </div>
-                        <Badge className={getPriorityColor(consultation.service_type)}>
-                            {consultation.service_type.replace('_', ' ')}
-                        </Badge>
+        <Card className="bg-white border-border shadow-sm hover:shadow-md transition-all group">
+            <CardHeader className="pb-3 border-b border-border/50">
+                <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                        <CardTitle className="text-lg font-serif font-medium text-foreground group-hover:text-eucalyptus transition-colors">
+                            {consultation.service_type.split('_').map(w =>
+                                w.charAt(0).toUpperCase() + w.slice(1)
+                            ).join(' ')}
+                        </CardTitle>
+                        <CardDescription className="text-muted-foreground flex items-center gap-1 mt-1 text-xs">
+                            <Calendar className="w-3 h-3" />
+                            {formatDistanceToNow(new Date(consultation.created_at), { addSuffix: true })}
+                        </CardDescription>
                     </div>
-                </CardHeader>
-                <CardContent>
-                    <div className="space-y-3">
-                        {/* Patient Info */}
-                        <div className="flex items-center gap-2 text-emerald-100/80">
-                            <User className="w-4 h-4" />
-                            <span className="text-sm">Patient ID: {consultation.patient_id.slice(0, 8)}...</span>
+                    <Badge variant="outline" className={getPriorityColor(consultation.service_type)}>
+                        {consultation.service_type.replace('_', ' ')}
+                    </Badge>
+                </div>
+            </CardHeader>
+            <CardContent className="pt-4">
+                <div className="space-y-4">
+                    {/* Patient Info */}
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-foreground font-medium text-xs">
+                            ID
                         </div>
-
-                        {/* Status Indicator */}
-                        <div className="flex items-center gap-2">
-                            {consultation.status === 'pending_review' && (
-                                <>
-                                    <Clock className="w-4 h-4 text-amber-400" />
-                                    <span className="text-sm text-amber-200">Awaiting Review</span>
-                                </>
-                            )}
-                            {consultation.status === 'in_progress' && (
-                                <>
-                                    <AlertCircle className="w-4 h-4 text-blue-400" />
-                                    <span className="text-sm text-blue-200">In Progress</span>
-                                </>
-                            )}
-                            {(consultation.status === 'approved' || consultation.status === 'completed') && (
-                                <>
-                                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                                    <span className="text-sm text-emerald-200">Completed</span>
-                                </>
-                            )}
-                        </div>
-
-                        {/* Action Button */}
-                        <Button
-                            className="w-full bg-white/20 hover:bg-white/30 text-white border border-white/20"
-                            size="sm"
-                        >
-                            Review Consultation
-                        </Button>
+                        <span className="font-medium text-foreground">Patient #{consultation.patient_id.slice(0, 6)}</span>
                     </div>
-                </CardContent>
-            </Card>
-        </HoverTilt>
+
+                    {/* Status Indicator */}
+                    <div className="flex items-center gap-2 text-sm">
+                        {consultation.status === 'pending_review' && (
+                            <>
+                                <Clock className="w-4 h-4 text-amber-500" />
+                                <span className="text-amber-700 font-medium">Awaiting Review</span>
+                            </>
+                        )}
+                        {consultation.status === 'in_progress' && (
+                            <>
+                                <AlertCircle className="w-4 h-4 text-blue-500" />
+                                <span className="text-blue-700 font-medium">In Progress</span>
+                            </>
+                        )}
+                        {(consultation.status === 'approved' || consultation.status === 'completed') && (
+                            <>
+                                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                                <span className="text-emerald-700 font-medium">Completed</span>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Action Button */}
+                    <Button
+                        className="w-full bg-secondary text-secondary-foreground hover:bg-eucalyptus hover:text-white transition-all group/btn"
+                        size="sm"
+                    >
+                        Review Consultation
+                        <ArrowRight className="w-4 h-4 ml-2 opacity-50 group-hover/btn:opacity-100 transition-opacity" />
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
     );
 
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
-                <div className="w-8 h-8 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-eucalyptus border-t-transparent rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 max-w-7xl mx-auto">
             {/* Header */}
             <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-['Playfair_Display'] font-bold text-white">
+                <h1 className="text-3xl font-serif font-bold text-foreground">
                     Clinical Queue
                 </h1>
-                <p className="text-emerald-200/60">
+                <p className="text-muted-foreground">
                     Review and manage patient consultations
                 </p>
             </div>
@@ -141,61 +142,67 @@ export default function PharmacistDashboardPage() {
             {/* Stats Cards */}
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StaggerItem>
-                    <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6">
-                        <div className="flex flex-col gap-1">
-                            <span className="text-amber-200/80 text-xs font-medium uppercase tracking-wider">
-                                Pending Review
-                            </span>
-                            <span className="text-5xl font-['Playfair_Display'] text-white">
-                                <Counter to={pendingItems.length} duration={1.5} />
-                            </span>
-                            <p className="text-emerald-100/60 text-sm mt-2">
-                                New consultations awaiting your review
-                            </p>
-                        </div>
+                    <Card className="bg-white border-border shadow-sm hover:shadow-md transition-all">
+                        <CardContent className="p-6">
+                            <div className="flex flex-col gap-1">
+                                <span className="text-amber-600/80 text-xs font-bold uppercase tracking-wider">
+                                    Pending Review
+                                </span>
+                                <span className="text-4xl font-serif font-medium text-foreground">
+                                    <Counter to={pendingItems.length} duration={1.5} />
+                                </span>
+                                <p className="text-muted-foreground text-sm mt-2">
+                                    New consultations awaiting
+                                </p>
+                            </div>
+                        </CardContent>
                     </Card>
                 </StaggerItem>
 
                 <StaggerItem>
-                    <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6">
-                        <div className="flex flex-col gap-1">
-                            <span className="text-blue-200/80 text-xs font-medium uppercase tracking-wider">
-                                In Progress
-                            </span>
-                            <span className="text-5xl font-['Playfair_Display'] text-white">
-                                <Counter to={inProgressItems.length} duration={1.5} />
-                            </span>
-                            <p className="text-emerald-100/60 text-sm mt-2">
-                                Active consultations in review
-                            </p>
-                        </div>
+                    <Card className="bg-white border-border shadow-sm hover:shadow-md transition-all">
+                        <CardContent className="p-6">
+                            <div className="flex flex-col gap-1">
+                                <span className="text-blue-600/80 text-xs font-bold uppercase tracking-wider">
+                                    In Progress
+                                </span>
+                                <span className="text-4xl font-serif font-medium text-foreground">
+                                    <Counter to={inProgressItems.length} duration={1.5} />
+                                </span>
+                                <p className="text-muted-foreground text-sm mt-2">
+                                    Active reviews
+                                </p>
+                            </div>
+                        </CardContent>
                     </Card>
                 </StaggerItem>
 
                 <StaggerItem>
-                    <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6">
-                        <div className="flex flex-col gap-1">
-                            <span className="text-emerald-200/80 text-xs font-medium uppercase tracking-wider">
-                                Completed
-                            </span>
-                            <span className="text-5xl font-['Playfair_Display'] text-white">
-                                <Counter to={completedItems.length} duration={1.5} />
-                            </span>
-                            <p className="text-emerald-100/60 text-sm mt-2">
-                                Successfully processed today
-                            </p>
-                        </div>
+                    <Card className="bg-white border-border shadow-sm hover:shadow-md transition-all">
+                        <CardContent className="p-6">
+                            <div className="flex flex-col gap-1">
+                                <span className="text-emerald-600/80 text-xs font-bold uppercase tracking-wider">
+                                    Completed
+                                </span>
+                                <span className="text-4xl font-serif font-medium text-foreground">
+                                    <Counter to={completedItems.length} duration={1.5} />
+                                </span>
+                                <p className="text-muted-foreground text-sm mt-2">
+                                    Processed today
+                                </p>
+                            </div>
+                        </CardContent>
                     </Card>
                 </StaggerItem>
             </StaggerContainer>
 
             {/* Consultations Grid */}
-            <div className="space-y-6">
+            <div className="space-y-8">
                 {/* Pending */}
                 {pendingItems.length > 0 && (
                     <div>
-                        <h2 className="text-2xl font-['Playfair_Display'] font-bold text-white mb-4 flex items-center gap-2">
-                            <Clock className="w-6 h-6 text-amber-400" />
+                        <h2 className="text-xl font-serif font-semibold text-foreground mb-4 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-amber-500" />
                             Pending Review
                         </h2>
                         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -211,8 +218,8 @@ export default function PharmacistDashboardPage() {
                 {/* In Progress */}
                 {inProgressItems.length > 0 && (
                     <div>
-                        <h2 className="text-2xl font-['Playfair_Display'] font-bold text-white mb-4 flex items-center gap-2">
-                            <AlertCircle className="w-6 h-6 text-blue-400" />
+                        <h2 className="text-xl font-serif font-semibold text-foreground mb-4 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-blue-500" />
                             In Progress
                         </h2>
                         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -228,8 +235,8 @@ export default function PharmacistDashboardPage() {
                 {/* Completed */}
                 {completedItems.length > 0 && (
                     <div>
-                        <h2 className="text-2xl font-['Playfair_Display'] font-bold text-white mb-4 flex items-center gap-2">
-                            <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                        <h2 className="text-xl font-serif font-semibold text-foreground mb-4 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500" />
                             Completed
                         </h2>
                         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -244,14 +251,16 @@ export default function PharmacistDashboardPage() {
 
                 {/* Empty State */}
                 {consultations.length === 0 && (
-                    <Card className="bg-white/10 backdrop-blur-md border-white/20">
+                    <Card className="bg-white border-border border-dashed shadow-sm">
                         <CardContent className="py-12 text-center">
-                            <CheckCircle2 className="w-16 h-16 text-emerald-400/50 mx-auto mb-4" />
-                            <h3 className="text-xl font-['Playfair_Display'] font-bold text-white mb-2">
-                                No Consultations
+                            <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mx-auto mb-4">
+                                <CheckCircle2 className="w-8 h-8 text-emerald-600" />
+                            </div>
+                            <h3 className="text-xl font-serif font-bold text-foreground mb-2">
+                                All Caught Up
                             </h3>
-                            <p className="text-emerald-200/60">
-                                All caught up! New consultations will appear here.
+                            <p className="text-muted-foreground">
+                                No new consultations to review.
                             </p>
                         </CardContent>
                     </Card>
