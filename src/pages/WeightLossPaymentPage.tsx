@@ -80,7 +80,7 @@ export default function WeightLossPaymentPage() {
     return (
         <Layout>
             <div className="min-h-screen bg-gradient-to-b from-[#134E4A]/5 to-background flex items-center justify-center">
-                <div className="max-w-2xl mx-auto px-4 py-12">
+                <div className="max-w-2xl mx-auto px-4 pt-32 pb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}

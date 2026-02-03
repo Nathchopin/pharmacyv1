@@ -225,7 +225,7 @@ export default function WeightLossDeliveryPage() {
     return (
         <Layout>
             <div className="min-h-screen bg-gradient-to-b from-[#134E4A]/5 to-background">
-                <div className="max-w-2xl mx-auto px-4 py-12">
+                <div className="max-w-2xl mx-auto px-4 pt-32 pb-12">
                     {/* Header */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
