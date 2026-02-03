@@ -749,7 +749,7 @@ function CheckboxList({ question, value, onChange }: any) {
                         key={option.value}
                         type="button"
                         onClick={() => toggleItem(option.value)}
-                        className={`w-full text-left px-6 py-4 rounded-xl border-2 transition-all duration-200 ease-in-out transform hover:scale-[1.01] active:scale-[0.99] font-medium ${isSelected
+                        className={`w-full text-left px-6 py-4 rounded-xl border-2 transition-colors duration-200 font-medium ${isSelected
                             ? "border-[#134E4A] bg-[#134E4A]/5"
                             : "border-gray-200 hover:border-[#134E4A]/30 hover:bg-gray-50"
                             }`}
