@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* DeepFlow "Apple x Juniper" Design System */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+
+    /* Pure White Card */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    /* Dark Slate Primary (Apple-style) */
+    --primary: 0 0% 12%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Soft Grey Secondary */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 12%;
+
+    /* Muted Tones */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Medical Blue Accent - Trustworthy Healthcare */
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Clinical Green for Success States */
+    --success: 158 64% 52%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 152 81% 96%;
+    --success-dark: 162 85% 14%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 199 89% 48%;
+
+    --radius: 24px;
+
+    /* Apple-style Design Tokens */
+    --glass-bg: 0 0% 100% / 0.8;
+    --glass-border: 0 0% 0% / 0.05;
+    
+    /* Dark Slate (Apple) */
+    --slate: 0 0% 12%;
+    --slate-light: 0 0% 45%;
+    
+    /* Medical Blue shades */
+    --medical-blue: 199 89% 48%;
+    --medical-blue-light: 199 89% 60%;
+    --medical-blue-dark: 199 89% 38%;
+
+    /* Clinical Green shades */
+    --clinical-green: 158 64% 52%;
+    --clinical-green-light: 152 81% 96%;
+    --clinical-green-dark: 162 85% 14%;
+
+    /* Deep Eucalyptus - Patient Portal Brand */
+    --eucalyptus: 169 57% 19%;
+    --eucalyptus-light: 169 40% 35%;
+    --eucalyptus-dark: 169 70% 12%;
+    --eucalyptus-muted: 169 20% 90%;
+
+    /* Portal Color Tokens */
+    --portal-bg: 210 20% 98%;
+    --portal-card: 0 0% 100%;
+    --portal-accent: 169 57% 19%;
+    --portal-accent-foreground: 0 0% 100%;
+
+    /* Shadows - Apple style */
+    --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.08);
+    --shadow-lg: 0 12px 40px hsl(0 0% 0% / 0.12);
+    --shadow-xl: 0 20px 60px hsl(0 0% 0% / 0.15);
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 12%;
+    --sidebar-primary: 169 57% 19%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 169 20% 90%;
+    --sidebar-accent-foreground: 169 57% 19%;
+    --sidebar-border: 0 0% 92%;
+    --sidebar-ring: 169 57% 19%;
+  }
+
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 199 89% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 199 89% 55%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 199 89% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 199 89% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* iOS-style spring scroll */
+    scroll-snap-type: y proximity;
+    /* iOS safe areas */
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  }
+  
+  @supports (overflow: overlay) {
+    html {
+      overflow: overlay;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior-y: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-medium tracking-tight;
+  }
+}
+
+@layer components {
+  /* Apple-style Typography */
+  .heading-hero {
+    font-family: 'Playfair Display', serif;
+    @apply text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[0.95];
+  }
+
+  .heading-display {
+    font-family: 'Playfair Display', serif;
+    @apply text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-tight;
+  }
+
+  .heading-section {
+    font-family: 'Playfair Display', serif;
+    @apply text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight;
+  }
+
+  .heading-card {
+    font-family: 'Playfair Display', serif;
+    @apply text-xl md:text-2xl font-medium;
+  }
+
+  .text-elegant {
+    font-family: 'Inter', sans-serif;
+    @apply text-base md:text-lg font-light leading-relaxed;
+  }
+
+  .text-body {
+    font-family: 'Inter', sans-serif;
+    @apply text-sm md:text-base font-normal leading-relaxed;
+  }
+
+  .text-label {
+    font-family: 'Inter', sans-serif;
+    @apply text-xs font-medium uppercase tracking-[0.15em];
+  }
+
+  /* Glassmorphism - Enhanced with saturation */
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+
+  .glass-strong {
+    @apply bg-white/90 backdrop-blur-2xl;
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+  }
+  
+  .glass-nav {
+    @apply bg-white/70;
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl rounded-3xl border border-black/5;
+  }
+
+  /* Apple-style Buttons */
+  .btn-primary {
+    @apply bg-accent text-white hover:bg-accent/90 transition-all duration-300 rounded-full;
+  }
+
+  .btn-secondary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-full;
+  }
+
+  .btn-outline {
+    @apply border border-current hover:bg-primary hover:text-primary-foreground transition-all duration-300 rounded-full;
+  }
+
+  /* Card Styles */
+  .card-bento {
+    @apply bg-secondary rounded-3xl p-8 transition-all duration-500 hover:shadow-lg;
+  }
+
+  .card-glass {
+    @apply glass-card p-8 shadow-lg;
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-padding-sm {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .container-narrow {
+    @apply max-w-5xl mx-auto px-4 md:px-6;
+  }
+}
+
+@layer utilities {
+  /* Animation Utilities */
+  .animate-fade-up {
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Progress Ring Animation */
+  @keyframes progress-ring {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .progress-ring {
+    animation: progress-ring 1s ease-out forwards;
+  }
+
+  /* iOS Safe Area Utilities */
+  .safe-area-pt {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  
+  .safe-area-pl {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+  
+  .safe-area-pr {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Touch interaction improvements for mobile */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Smooth scrolling container for mobile */
+  .scroll-smooth-mobile {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

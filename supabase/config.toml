@@ -1,0 +1,10 @@
+project_id = "fpykqpprbzqbvedwugap"
+
+[functions.analyze-blood]
+verify_jwt = false
+
+[functions.ai-health-recommendations]
+verify_jwt = false
+
+[functions.travel-health-advisor]
+verify_jwt = false
