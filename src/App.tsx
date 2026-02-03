@@ -27,6 +27,9 @@ import PharmacistDashboardPage from "@/pages/pharmacist/PharmacistDashboardPage"
 import PharmacistPatientsPage from "@/pages/pharmacist/PharmacistPatientsPage";
 import PharmacistPrescriptionsPage from "@/pages/pharmacist/PharmacistPrescriptionsPage";
 import PharmacistSettingsPage from "@/pages/pharmacist/PharmacistSettingsPage";
+import ClinicalReviewPage from "@/pages/pharmacist/ClinicalReviewPage";
+import AppointmentPage from "@/pages/pharmacist/AppointmentPage";
+import InventoryPage from "@/pages/pharmacist/InventoryPage";
 import { PharmacistLayout } from "@/components/pharmacist/PharmacistLayout";
 import WeightLossStartPage from "./pages/WeightLossStartPage";
 import WeightLossRecommendationPage from "./pages/WeightLossRecommendationPage";
@@ -103,6 +106,46 @@ function App() {
                   <ProtectedRoute requiredRole="pharmacist">
                     <PharmacistLayout>
                       <PharmacistDashboardPage />
+                    </PharmacistLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pharmacist/clinical/:service"
+                element={
+                  <ProtectedRoute requiredRole="pharmacist">
+                    <PharmacistLayout>
+                      <ClinicalReviewPage />
+                    </PharmacistLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pharmacist/appointments"
+                element={
+                  <ProtectedRoute requiredRole="pharmacist">
+                    <PharmacistLayout>
+                      <AppointmentPage />
+                    </PharmacistLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pharmacist/appointments/:service"
+                element={
+                  <ProtectedRoute requiredRole="pharmacist">
+                    <PharmacistLayout>
+                      <AppointmentPage />
+                    </PharmacistLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pharmacist/orders/:service"
+                element={
+                  <ProtectedRoute requiredRole="pharmacist">
+                    <PharmacistLayout>
+                      <InventoryPage />
                     </PharmacistLayout>
                   </ProtectedRoute>
                 }

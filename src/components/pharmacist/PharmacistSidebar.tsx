@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import {
+import {
     ClipboardList,
     Users,
     Pill,
@@ -13,13 +14,19 @@ import {
     Menu,
     ChevronLeft,
     ChevronRight,
-    Shield,
+    Heart,
     X,
-    Heart
+    Activity,
+    Thermometer,
+    Plane,
+    ShoppingBag,
+    Stethoscope,
+    Syringe
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { usePharmacistStats } from "@/hooks/use-pharmacist-stats";
 
 interface PharmacistSidebarProps {
     collapsed: boolean;
@@ -27,13 +34,6 @@ interface PharmacistSidebarProps {
     mobileOpen?: boolean;
     onMobileOpenChange?: (open: boolean) => void;
 }
-
-const navigation = [
-    { name: "Clinical Queue", href: "/pharmacist", icon: ClipboardList },
-    { name: "Patients", href: "/pharmacist/patients", icon: Users },
-    { name: "Prescriptions", href: "/pharmacist/prescriptions", icon: Pill },
-    { name: "Settings", href: "/pharmacist/settings", icon: Settings },
-];
 
 export function PharmacistSidebar({
     collapsed,
@@ -45,6 +45,7 @@ export function PharmacistSidebar({
     const location = useLocation();
     const { toast } = useToast();
     const isMobile = useIsMobile();
+    const { stats } = usePharmacistStats();
 
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
@@ -60,9 +61,7 @@ export function PharmacistSidebar({
     };
 
     const isActive = (path: string) => {
-        if (path === "/pharmacist") {
-            return location.pathname === "/pharmacist";
-        }
+        if (path === "/pharmacist") return location.pathname === "/pharmacist";
         return location.pathname.startsWith(path);
     };
 
@@ -72,6 +71,80 @@ export function PharmacistSidebar({
             onMobileOpenChange(false);
         }
     };
+
+    const navigationGroups = [
+        {
+            title: "Clinical Reviews",
+            items: [
+                { 
+                    name: "Weight Management", 
+                    href: "/pharmacist/clinical/weight_loss", 
+                    icon: Activity,
+                    count: stats.weight_loss,
+                    color: "text-amber-500",
+                    badgeColor: "bg-amber-100 text-amber-700"
+                },
+                { 
+                    name: "Hair Loss", 
+                    href: "/pharmacist/clinical/hair_loss", 
+                    icon: Users, // Placeholder icon
+                    count: stats.hair_loss,
+                    color: "text-orange-500",
+                    badgeColor: "bg-orange-100 text-orange-700" 
+                },
+            ]
+        },
+        {
+            title: "Appointments",
+            items: [
+                { 
+                    name: "Blood Tests", 
+                    href: "/pharmacist/appointments", 
+                    icon: Syringe,
+                    count: stats.blood_test,
+                    color: "text-rose-500",
+                    badgeColor: "bg-rose-100 text-rose-700"
+                },
+                { 
+                    name: "Pharmacy First", 
+                    href: "/pharmacist/appointments", 
+                    icon: Stethoscope,
+                    count: stats.pharmacy_first,
+                    color: "text-blue-500",
+                    badgeColor: "bg-blue-100 text-blue-700"
+                },
+            ]
+        },
+        {
+            title: "Inventory & Orders",
+            items: [
+                { 
+                    name: "Travel Clinic", 
+                    href: "/pharmacist/orders/travel_clinic", 
+                    icon: Plane,
+                    count: stats.travel_clinic,
+                    color: "text-sky-500",
+                    badgeColor: "bg-sky-100 text-sky-700"
+                },
+                { 
+                    name: "Shop Orders", 
+                    href: "/pharmacist/orders/shop", 
+                    icon: ShoppingBag,
+                    count: stats.shop,
+                    color: "text-purple-500",
+                    badgeColor: "bg-purple-100 text-purple-700"
+                },
+            ]
+        },
+        {
+            title: "Admin",
+            items: [
+                 { name: "Patients", href: "/pharmacist/patients", icon: Users },
+                 { name: "Settings", href: "/pharmacist/settings", icon: Settings },
+            ]
+
+        }
+    ];
 
     const SidebarContent = ({ showToggle = true }: { showToggle?: boolean }) => (
         <div className="h-full flex flex-col bg-white">
@@ -84,12 +157,11 @@ export function PharmacistSidebar({
                     {(!collapsed || isMobile) && (
                         <div>
                             <span className="font-serif text-lg font-medium text-eucalyptus block leading-tight">Pharma+</span>
-                            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Clinical</span>
+                            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">OS 1.0</span>
                         </div>
                     )}
                 </div>
 
-                {/* Mobile close button */}
                 {isMobile && onMobileOpenChange && (
                     <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => onMobileOpenChange(false)}>
                         <X className="w-5 h-5" />
@@ -98,40 +170,71 @@ export function PharmacistSidebar({
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
-                {navigation.map((item) => {
-                    const active = isActive(item.href);
-                    const Icon = item.icon;
-                    return (
-                        <motion.button
-                            key={item.name}
-                            onClick={() => handleNavigation(item.href)}
-                            className={cn(
-                                "w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200",
-                                active
-                                    ? "bg-eucalyptus text-white"
-                                    : "text-muted-foreground hover:bg-eucalyptus-muted hover:text-eucalyptus"
-                            )}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            <Icon className={cn("w-5 h-5 shrink-0", !isMobile && collapsed && "mx-auto")} />
-                            {(!collapsed || isMobile) && <span className="font-medium text-sm">{item.name}</span>}
-                        </motion.button>
-                    );
-                })}
+            <nav className="flex-1 py-6 px-3 space-y-6 overflow-y-auto">
+                {navigationGroups.map((group, groupIdx) => (
+                    <div key={groupIdx}>
+                        {(!collapsed || isMobile) && (
+                             <h3 className="px-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">
+                                {group.title}
+                            </h3>
+                        )}
+                       
+                        <div className="space-y-1">
+                            {group.items.map((item) => {
+                                const active = isActive(item.href);
+                                const Icon = item.icon;
+                                return (
+                                    <motion.button
+                                        key={item.name}
+                                        onClick={() => handleNavigation(item.href)}
+                                        className={cn(
+                                            "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
+                                            active
+                                                ? "bg-slate-50 text-foreground font-medium shadow-sm border border-slate-100"
+                                                : "text-muted-foreground hover:bg-slate-50 hover:text-foreground"
+                                        )}
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
+                                    >
+                                        <Icon className={cn(
+                                            "w-5 h-5 shrink-0 transition-colors",
+                                            active ? item.color || "text-eucalyptus" : "text-muted-foreground group-hover:text-foreground",
+                                            !isMobile && collapsed && "mx-auto"
+                                        )} />
+                                        
+                                        {(!collapsed || isMobile) && (
+                                            <>
+                                                <span className="text-sm truncate flex-1 text-left">{item.name}</span>
+                                                {item.count !== undefined && item.count > 0 && (
+                                                    <span className={cn(
+                                                        "px-2 py-0.5 rounded-full text-[10px] font-bold",
+                                                        item.badgeColor || "bg-slate-100 text-slate-600"
+                                                    )}>
+                                                        {item.count}
+                                                    </span>
+                                                )}
+                                            </>
+                                        )}
+                                        {/* Notification Dot for Collapsed State */}
+                                        {collapsed && !isMobile && item.count !== undefined && item.count > 0 && (
+                                            <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 ring-1 ring-white" />
+                                        )}
+                                    </motion.button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                ))}
             </nav>
 
             {/* Return to Patient Portal Link */}
             <div className="px-3 pb-2 mt-auto">
-                <motion.button
+                 <motion.button
                     onClick={() => {
                         handleLogout();
                         navigate("/auth");
                     }}
                     className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-muted-foreground hover:bg-eucalyptus/10 hover:text-eucalyptus transition-all"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                 >
                     <span className="w-5 h-5 flex items-center justify-center font-serif text-xs border border-current rounded-md shrink-0">P+</span>
                     {(!collapsed || isMobile) && <span className="font-medium text-sm">Patient Portal</span>}
