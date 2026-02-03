@@ -32,7 +32,7 @@
     /* Medical Blue Accent - Trustworthy Healthcare */
     --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
-    
+
     /* Clinical Green for Success States */
     --success: 158 64% 52%;
     --success-foreground: 0 0% 100%;
@@ -51,11 +51,11 @@
     /* Apple-style Design Tokens */
     --glass-bg: 0 0% 100% / 0.8;
     --glass-border: 0 0% 0% / 0.05;
-    
+
     /* Dark Slate (Apple) */
     --slate: 0 0% 12%;
     --slate-light: 0 0% 45%;
-    
+
     /* Medical Blue shades */
     --medical-blue: 199 89% 48%;
     --medical-blue-light: 199 89% 60%;
@@ -141,6 +141,8 @@
   }
 
   html {
+    overflow-y: scroll;
+    /* Prevents layout shift when scrollbar appears */
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -152,7 +154,7 @@
     --safe-area-inset-left: env(safe-area-inset-left, 0px);
     --safe-area-inset-right: env(safe-area-inset-right, 0px);
   }
-  
+
   @supports (overflow: overlay) {
     html {
       overflow: overlay;
@@ -166,13 +168,19 @@
     overscroll-behavior-y: none;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', serif;
     @apply font-medium tracking-tight;
   }
 }
 
 @layer components {
+
   /* Apple-style Typography */
   .heading-hero {
     font-family: 'Playfair Display', serif;
@@ -221,7 +229,7 @@
     backdrop-filter: blur(40px) saturate(200%);
     -webkit-backdrop-filter: blur(40px) saturate(200%);
   }
-  
+
   .glass-nav {
     @apply bg-white/70;
     backdrop-filter: blur(40px) saturate(150%);
@@ -269,6 +277,7 @@
 }
 
 @layer utilities {
+
   /* Animation Utilities */
   .animate-fade-up {
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -287,6 +296,7 @@
       opacity: 0;
       transform: translateY(30px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -297,6 +307,7 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -307,6 +318,7 @@
       opacity: 0;
       transform: scale(0.96);
     }
+
     to {
       opacity: 1;
       transform: scale(1);
@@ -318,6 +330,7 @@
     from {
       stroke-dashoffset: 100;
     }
+
     to {
       stroke-dashoffset: 0;
     }
@@ -331,15 +344,15 @@
   .safe-area-pt {
     padding-top: env(safe-area-inset-top, 0px);
   }
-  
+
   .safe-area-pb {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  
+
   .safe-area-pl {
     padding-left: env(safe-area-inset-left, 0px);
   }
-  
+
   .safe-area-pr {
     padding-right: env(safe-area-inset-right, 0px);
   }
@@ -360,7 +373,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
