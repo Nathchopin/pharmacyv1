@@ -96,11 +96,15 @@ export default function WeightLossPaymentPage() {
             window.location.href = data.url;
 
         } catch (error: any) {
-            console.error("Checkout error:", error);
+            console.error("Checkout error details:", error);
             setRedirecting(false);
+
+            // Try to extract a more specific error message
+            const errorMessage = error.message || error.toString() || "Could not initialise payment.";
+
             toast({
                 title: "Checkout Error",
-                description: "Could not initialise payment. Please try again.",
+                description: `${errorMessage} Please try again or contact support.`,
                 variant: "destructive"
             });
         }
