@@ -216,14 +216,14 @@ export default function WeightLossRecommendationPage() {
             name: "Mounjaro",
             description: "A dual-action treatment that mimics two natural hormones to regulate hunger and blood sugar. Clinical trials show up to 20% weight loss.",
             image: mounjaroSyringe,
-            price: "£229",
+            price: "£249.00",
             clinical_details: "Mounjaro (Tirzepatide) mimics both GIP and GLP-1 hormones, activating receptors in the brain to reduce appetite and improve how the body breaks down sugar and fat. It is currently the most effective weight loss medication available."
         },
         wegovy: {
             name: "Wegovy",
             description: "The gold standard in GLP-1 treatment. Clinically proven to help patients lose ~15% body weight.",
             image: wegovySyringe,
-            price: "£199",
+            price: "£199.00",
             clinical_details: "Wegovy (Semaglutide) acts on GLP-1 receptors in the brain to regulate appetite and food intake. It slows down gastric emptying, helping you feel fuller for longer."
         }
     };

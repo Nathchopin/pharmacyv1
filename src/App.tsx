@@ -32,6 +32,7 @@ import WeightLossStartPage from "./pages/WeightLossStartPage";
 import WeightLossRecommendationPage from "./pages/WeightLossRecommendationPage";
 import WeightLossDeliveryPage from "./pages/WeightLossDeliveryPage";
 import WeightLossPaymentPage from "./pages/WeightLossPaymentPage";
+import WeightLossConfirmationPage from "./pages/WeightLossConfirmationPage";
 import NotFound from "./pages/NotFound";
 
 
@@ -63,6 +64,7 @@ function App() {
               <Route path="/weight-loss/recommendation" element={<WeightLossRecommendationPage />} />
               <Route path="/weight-loss/delivery" element={<WeightLossDeliveryPage />} />
               <Route path="/weight-loss/payment" element={<WeightLossPaymentPage />} />
+              <Route path="/weight-loss/confirmation" element={<WeightLossConfirmationPage />} />
 
               {/* PATIENT ROUTES - Require auth + patient role */}
               <Route path="/dashboard" element={

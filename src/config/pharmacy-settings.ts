@@ -1,14 +1,14 @@
 export const PHARMACY_SETTINGS = {
     stripe: {
-        // Products
         products: {
-            wegovy: "prod_TuXTXDROyCsRKO",
-            mounjaro: "prod_TuXTfECMSDTMyC"
+            // Test Mode IDs
+            wegovy: "prod_TuY8Ak6b59UKEe",
+            mounjaro: "prod_TuY91fDTjxGhU5"
         },
         // Prices
         prices: {
-            wegovy: "price_1SwiOZK5ldiUSk3JUf08TsYC",
-            mounjaro: "price_1SwiOcK5ldiUSk3Jk0j80yTI"
+            wegovy: "price_1Swj2dA5ttWLaxZCpfc68InR",
+            mounjaro: "price_1Swj3TA5ttWLaxZCpyea9c5I"
         }
     },
     company: {

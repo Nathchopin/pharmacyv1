@@ -152,7 +152,7 @@ export default function WeightLossPaymentPage() {
                                 <div className="space-y-3 text-left text-sm">
                                     <div className="flex items-center justify-between font-medium text-base">
                                         <span>Treatment Plan ({medication === "wegovy" ? "Wegovy" : "Mounjaro"})</span>
-                                        <span>{medication === "wegovy" ? "£199.00" : "£229.00"} / month</span>
+                                        <span>{medication === "wegovy" ? "£199.00" : "£249.00"} / month</span>
                                     </div>
                                     <p className="text-muted-foreground text-xs">
                                         Includes medication, express delivery, and clinical oversight. Cancel anytime.

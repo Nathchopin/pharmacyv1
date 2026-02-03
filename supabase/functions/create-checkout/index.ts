@@ -43,7 +43,7 @@ serve(async (req) => {
                 medication: medication || "unknown",
             },
             // Note: In real prod, use dynamic origin
-            success_url: `${req.headers.get("origin")}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `${req.headers.get("origin")}/weight-loss/confirmation?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${req.headers.get("origin")}/weight-loss/payment?medication=${medication}`,
         });
 

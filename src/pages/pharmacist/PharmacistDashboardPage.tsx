@@ -56,8 +56,8 @@ export default function PharmacistDashboardPage() {
 
     const ConsultationCard = ({ consultation }: { consultation: Consultation }) => (
         <HoverTilt intensity={5}>
-            <Card className="bg-white/10 backdrop-blur-md border-white/20 shadow-lg hover:shadow-xl transition-all">
-                <CardHeader className="pb-3">
+            <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                <CardHeader className="pb-3 border-b border-white/10">
                     <div className="flex items-start justify-between gap-2">
                         <div className="flex-1">
                             <CardTitle className="text-white font-['Playfair_Display'] text-lg">
@@ -139,58 +139,52 @@ export default function PharmacistDashboardPage() {
             </div>
 
             {/* Stats Cards */}
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StaggerItem>
-                    <Card className="bg-gradient-to-br from-amber-500/20 to-amber-600/20 backdrop-blur-md border-amber-500/30">
-                        <CardHeader className="pb-2">
-                            <CardDescription className="text-amber-200/80 text-xs font-medium">
+                    <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6">
+                        <div className="flex flex-col gap-1">
+                            <span className="text-amber-200/80 text-xs font-medium uppercase tracking-wider">
                                 Pending Review
-                            </CardDescription>
-                            <CardTitle className="text-5xl font-['Playfair_Display'] text-white">
+                            </span>
+                            <span className="text-5xl font-['Playfair_Display'] text-white">
                                 <Counter to={pendingItems.length} duration={1.5} />
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-amber-200/60 text-sm">
+                            </span>
+                            <p className="text-emerald-100/60 text-sm mt-2">
                                 New consultations awaiting your review
                             </p>
-                        </CardContent>
+                        </div>
                     </Card>
                 </StaggerItem>
 
                 <StaggerItem>
-                    <Card className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-md border-blue-500/30">
-                        <CardHeader className="pb-2">
-                            <CardDescription className="text-blue-200/80 text-xs font-medium">
+                    <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6">
+                        <div className="flex flex-col gap-1">
+                            <span className="text-blue-200/80 text-xs font-medium uppercase tracking-wider">
                                 In Progress
-                            </CardDescription>
-                            <CardTitle className="text-5xl font-['Playfair_Display'] text-white">
+                            </span>
+                            <span className="text-5xl font-['Playfair_Display'] text-white">
                                 <Counter to={inProgressItems.length} duration={1.5} />
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-blue-200/60 text-sm">
+                            </span>
+                            <p className="text-emerald-100/60 text-sm mt-2">
                                 Active consultations in review
                             </p>
-                        </CardContent>
+                        </div>
                     </Card>
                 </StaggerItem>
 
                 <StaggerItem>
-                    <Card className="bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 backdrop-blur-md border-emerald-500/30">
-                        <CardHeader className="pb-2">
-                            <CardDescription className="text-emerald-200/80 text-xs font-medium">
+                    <Card className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6">
+                        <div className="flex flex-col gap-1">
+                            <span className="text-emerald-200/80 text-xs font-medium uppercase tracking-wider">
                                 Completed
-                            </CardDescription>
-                            <CardTitle className="text-5xl font-['Playfair_Display'] text-white">
+                            </span>
+                            <span className="text-5xl font-['Playfair_Display'] text-white">
                                 <Counter to={completedItems.length} duration={1.5} />
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-emerald-200/60 text-sm">
+                            </span>
+                            <p className="text-emerald-100/60 text-sm mt-2">
                                 Successfully processed today
                             </p>
-                        </CardContent>
+                        </div>
                     </Card>
                 </StaggerItem>
             </StaggerContainer>
