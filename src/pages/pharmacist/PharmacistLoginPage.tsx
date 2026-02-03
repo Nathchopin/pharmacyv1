@@ -7,7 +7,7 @@ export default function PharmacistLoginPage() {
             title="Pharmacist Cockpit, Clinical Access"
             subtitle="Secure access for reviewing consultations and managing patient care."
             allowedRoles={["pharmacist", "admin"]}
-            redirectTo="/pharmacist/dashboard"
+            redirectTo="/pharmacist"
             disableSignup={true}
         />
     );
