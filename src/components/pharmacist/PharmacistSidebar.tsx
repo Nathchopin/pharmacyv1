@@ -38,12 +38,16 @@ interface PharmacistSidebarProps {
     onMobileOpenChange?: (open: boolean) => void;
 }
 
-export function PharmacistSidebar() {
+export function PharmacistSidebar({
+    collapsed,
+    onToggle,
+    mobileOpen = false,
+    onMobileOpenChange,
+}: PharmacistSidebarProps) {
     const navigate = useNavigate();
     const location = useLocation();
     const { toast } = useToast();
-    const [collapsed, setCollapsed] = useState(false);
-    const [mobileOpen, setMobileOpen] = useState(false);
+    // Removed local state as it is controlled by props
     const isMobile = useIsMobile();
     const { stats: counts } = usePharmacistStats();
 
@@ -80,7 +84,7 @@ export function PharmacistSidebar() {
                     name: "Weight Management",
                     href: "/pharmacist/clinical/weight_loss",
                     icon: Activity,
-                    count: stats.weight_loss,
+                    count: counts.weight_loss,
                     color: "text-amber-500",
                     badgeColor: "bg-amber-100 text-amber-700"
                 },
@@ -88,7 +92,7 @@ export function PharmacistSidebar() {
                     name: "Hair Loss",
                     href: "/pharmacist/clinical/hair_loss",
                     icon: Users, // Placeholder icon
-                    count: stats.hair_loss,
+                    count: counts.hair_loss,
                     color: "text-orange-500",
                     badgeColor: "bg-orange-100 text-orange-700"
                 },
@@ -109,7 +113,7 @@ export function PharmacistSidebar() {
                     name: "Pharmacy First",
                     href: "/pharmacist/appointments",
                     icon: Stethoscope,
-                    count: stats.pharmacy_first,
+                    count: counts.pharmacy_first,
                     color: "text-blue-500",
                     badgeColor: "bg-blue-100 text-blue-700"
                 },
@@ -122,7 +126,7 @@ export function PharmacistSidebar() {
                     name: "Travel Clinic",
                     href: "/pharmacist/orders/travel_clinic",
                     icon: Plane,
-                    count: stats.travel_clinic,
+                    count: counts.travel_clinic,
                     color: "text-sky-500",
                     badgeColor: "bg-sky-100 text-sky-700"
                 },
@@ -130,7 +134,7 @@ export function PharmacistSidebar() {
                     name: "Shop Orders",
                     href: "/pharmacist/orders/shop",
                     icon: ShoppingBag,
-                    count: stats.shop,
+                    count: counts.shop,
                     color: "text-purple-500",
                     badgeColor: "bg-purple-100 text-purple-700"
                 },

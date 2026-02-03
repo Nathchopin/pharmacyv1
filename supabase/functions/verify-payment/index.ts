@@ -54,6 +54,7 @@ serve(async (req) => {
                 status: "pending_review", // CRITICAL: This puts it in the Pharmacist Cockpit
                 payment_status: "paid",
                 stripe_session_id: session_id,
+                payment_intent_id: session.payment_intent, // OPTIMIZATION: Save this now
                 updated_at: new Date().toISOString(),
             })
             .eq("id", consultation_id);
@@ -66,7 +67,38 @@ serve(async (req) => {
         console.log("Consultation updated successfully.");
 
         // 6. Stub Email Notification (Log only for now)
-        console.log(`[STUB] Sending order confirmation email to customer...`);
+        // 6. Send Order Confirmation Email
+        console.log(`Sending order confirmation email to customer...`);
+        const customerEmail = session.customer_details?.email;
+
+        if (customerEmail) {
+            const resendApiKey = Deno.env.get("RESEND_API_KEY");
+            if (resendApiKey) {
+                const { OrderConfirmationEmail } = await import("../_shared/email-templates.ts");
+                const emailHtml = OrderConfirmationEmail(consultation_id, `${req.headers.get("origin")}/dashboard`);
+
+                const res = await fetch("https://api.resend.com/emails", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${resendApiKey}`,
+                    },
+                    body: JSON.stringify({
+                        from: "Pharmacy <onboarding@resend.dev>",
+                        to: [customerEmail],
+                        subject: `Order #${consultation_id.slice(0, 8)} Received - Pending Clinical Review`,
+                        html: emailHtml,
+                    }),
+                });
+
+                const emailData = await res.json();
+                console.log("Email sent:", emailData);
+            } else {
+                console.error("RESEND_API_KEY not found");
+            }
+        } else {
+            console.error("No customer email found in session");
+        }
 
         return new Response(
             JSON.stringify({ success: true, message: "Order finalized" }),
