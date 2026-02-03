@@ -5,7 +5,6 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import {
-import {
     ClipboardList,
     Users,
     Pill,
@@ -76,38 +75,38 @@ export function PharmacistSidebar({
         {
             title: "Clinical Reviews",
             items: [
-                { 
-                    name: "Weight Management", 
-                    href: "/pharmacist/clinical/weight_loss", 
+                {
+                    name: "Weight Management",
+                    href: "/pharmacist/clinical/weight_loss",
                     icon: Activity,
                     count: stats.weight_loss,
                     color: "text-amber-500",
                     badgeColor: "bg-amber-100 text-amber-700"
                 },
-                { 
-                    name: "Hair Loss", 
-                    href: "/pharmacist/clinical/hair_loss", 
+                {
+                    name: "Hair Loss",
+                    href: "/pharmacist/clinical/hair_loss",
                     icon: Users, // Placeholder icon
                     count: stats.hair_loss,
                     color: "text-orange-500",
-                    badgeColor: "bg-orange-100 text-orange-700" 
+                    badgeColor: "bg-orange-100 text-orange-700"
                 },
             ]
         },
         {
             title: "Appointments",
             items: [
-                { 
-                    name: "Blood Tests", 
-                    href: "/pharmacist/appointments", 
+                {
+                    name: "Blood Tests",
+                    href: "/pharmacist/appointments",
                     icon: Syringe,
                     count: stats.blood_test,
                     color: "text-rose-500",
                     badgeColor: "bg-rose-100 text-rose-700"
                 },
-                { 
-                    name: "Pharmacy First", 
-                    href: "/pharmacist/appointments", 
+                {
+                    name: "Pharmacy First",
+                    href: "/pharmacist/appointments",
                     icon: Stethoscope,
                     count: stats.pharmacy_first,
                     color: "text-blue-500",
@@ -118,17 +117,17 @@ export function PharmacistSidebar({
         {
             title: "Inventory & Orders",
             items: [
-                { 
-                    name: "Travel Clinic", 
-                    href: "/pharmacist/orders/travel_clinic", 
+                {
+                    name: "Travel Clinic",
+                    href: "/pharmacist/orders/travel_clinic",
                     icon: Plane,
                     count: stats.travel_clinic,
                     color: "text-sky-500",
                     badgeColor: "bg-sky-100 text-sky-700"
                 },
-                { 
-                    name: "Shop Orders", 
-                    href: "/pharmacist/orders/shop", 
+                {
+                    name: "Shop Orders",
+                    href: "/pharmacist/orders/shop",
                     icon: ShoppingBag,
                     count: stats.shop,
                     color: "text-purple-500",
@@ -139,8 +138,8 @@ export function PharmacistSidebar({
         {
             title: "Admin",
             items: [
-                 { name: "Patients", href: "/pharmacist/patients", icon: Users },
-                 { name: "Settings", href: "/pharmacist/settings", icon: Settings },
+                { name: "Patients", href: "/pharmacist/patients", icon: Users },
+                { name: "Settings", href: "/pharmacist/settings", icon: Settings },
             ]
 
         }
@@ -174,11 +173,11 @@ export function PharmacistSidebar({
                 {navigationGroups.map((group, groupIdx) => (
                     <div key={groupIdx}>
                         {(!collapsed || isMobile) && (
-                             <h3 className="px-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">
+                            <h3 className="px-3 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">
                                 {group.title}
                             </h3>
                         )}
-                       
+
                         <div className="space-y-1">
                             {group.items.map((item) => {
                                 const active = isActive(item.href);
@@ -201,7 +200,7 @@ export function PharmacistSidebar({
                                             active ? item.color || "text-eucalyptus" : "text-muted-foreground group-hover:text-foreground",
                                             !isMobile && collapsed && "mx-auto"
                                         )} />
-                                        
+
                                         {(!collapsed || isMobile) && (
                                             <>
                                                 <span className="text-sm truncate flex-1 text-left">{item.name}</span>
@@ -229,7 +228,7 @@ export function PharmacistSidebar({
 
             {/* Return to Patient Portal Link */}
             <div className="px-3 pb-2 mt-auto">
-                 <motion.button
+                <motion.button
                     onClick={() => {
                         handleLogout();
                         navigate("/auth");
